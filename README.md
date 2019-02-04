@@ -15,11 +15,12 @@ This package allows you to add a NodeJS Express server easily and quickly to you
 
 **✨ Features:**
 
-Includes a fully customizable Express Server:
- 1. Just add your api routes into your project (with import/export support) without thinking to something else.
- 2. Optionally, add automatic fallback to the JavaScript app, to serve both the api and the application with only one command. 
+Includes a fully customizable Express Server, which allows you to:
+  
+ - Serve your Javascript application, with routing handling.
+ - Add directly your api routes into your project, without thinking to something else.
 
-# Table of contents
+## Table of contents
 
 - [Getting started](#Getting-started)
 - [Configuration](#Configuration)
@@ -28,7 +29,7 @@ Includes a fully customizable Express Server:
 
 ------
 
-# Getting started
+## Getting started
 
 In this ReadMe, we will take an example with a create-react-app application, and a @vue/cli one is coming. But it can be what you want, so please, let us know if you tested it with another framework or app. It will be added to this doc.
 
@@ -40,8 +41,8 @@ npm install serve-my-app express
 Add the commands to your package.json
 
 ```json
-"express": serve-my-app,
-"express:run": serve-my-app
+"express": "serve-my-app --watch",
+"express:run": "NODE_ENV=production serve-my-app"
 ```
 
 ## Configuration
@@ -155,9 +156,9 @@ Then :
 **👍 You can use relative urls for xhr/fetch calls in your code.**
 
 
-# FAQ
+## FAQ
 
-## I want to use some transpilation process for my server (Webpack, TypeScript, ...).
+### I want to use some transpilation process for my server (Webpack, TypeScript, ...).
 
 And you're right, it's a good idea!
 
@@ -171,7 +172,9 @@ For example, for a TypeScript compilation, and an `"outDir": "../dist"` in `srv/
 "express:run": "NODE_ENV=production serve-my-app --srv=dist"
 ```
 
-## My `package.json` behaves in a weird manner: a `proxy` key comes and goes in it.
+**🔗 See a full example at: [mathieutu/starter-kit-react-express](https://github.com/mathieutu/starter-kit-react-express)**
+
+### My `package.json` behaves in a weird manner: a `proxy` key comes and goes in it.
 
 To proxify xhr calls from the front dev server to the express server, create-react-app uses a `proxy` key in the package.json. This is why this package adds it automatically in the file when it is launched in dev mode (when `--prod` is `false`), and removes it when it is stopped. 
 
@@ -179,16 +182,16 @@ This should be transparent for you, but if you want to disable this automatic ad
 
 You can find the documentation about proxies in create-react-app [here](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#docsNav).
 
-## Another question?
+### Another question?
 
-Please feel free to [ask it](./issues/new)!
+Please feel free to [ask it](https://github.com/mathieutu/serve-my-app/issues/new)!
 
-# License
+
+## License
 
 This package is an open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 
-
-# Contributing
+## Contributing
 
 Issues and PRs are obviously welcomed and encouraged, as well as new features and documentation.
