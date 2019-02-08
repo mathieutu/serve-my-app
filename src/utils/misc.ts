@@ -1,11 +1,11 @@
-export const coalesce = (...args: any[]): any | void => {
+export const coalesce = (...args: any[]): any => {
   for (const key in args) {
-    if (args[key] !== undefined) {
+    if (isDefined(args[key])) {
       return args[key]
     }
   }
 
-  // return undefined
+  return args[args.length - 1]
 }
 
 type ObjectKey = string | number | symbol
@@ -20,7 +20,7 @@ export const getIn = <O extends object>
 export type Maybe<T> = T | void
 
 export const isDefined = <T>(x: Maybe<T>): x is T => {
-  return x !== undefined && x !== null
+  return !isUndefined(x)
 }
 
 export const isUndefined = <T>(x: Maybe<T>): x is void => {
