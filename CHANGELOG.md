@@ -1,7 +1,15 @@
 # Changelog
 
+<a name="0.1.1"></a>
+## 0.1.1 (2019-03-19)
+
+### Fixed
+
+- 🐛 Fix &quot;Cannot find module &#x27;xxx/srv&#x27;&quot; when no server (fix [#13](https://github.com/mathieutu/serve-my-app/issues/13)). [[506d5aa](https://github.com/mathieutu/serve-my-app/commit/506d5aa44835ef438a39800d89e00d14053437c6)]
+
+
 <a name="0.1.0"></a>
-## 0.1.0
+## 0.1.0 (2019-02-08)
 
 ### Added
 
@@ -19,7 +27,7 @@
 
 
 <a name="0.0.1"></a>
-## 0.0.1
+## 0.0.1 (2019-02-03)
 
 ### Added
 
