@@ -1,6 +1,7 @@
 # serve-my-app
 
-[![npm](https://img.shields.io/npm/v/serve-my-app.svg) ![npm](https://img.shields.io/npm/dt/serve-my-app.svg)](https://www.npmjs.com/package/serve-my-app)
+[![npm](https://img.shields.io/npm/v/serve-my-app.svg)](https://www.npmjs.com/package/serve-my-app)
+[![npm](https://img.shields.io/npm/dt/serve-my-app.svg)](https://www.npmjs.com/package/serve-my-app) 
 
 
 **🚀  Serve your Javascript application and/or add an API to it in a minute!**
