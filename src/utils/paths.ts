@@ -37,14 +37,14 @@ const isTypescriptFile = (path: string) => {
 }
 
 export const load = (path: string) => {
-  if (isTypescriptFile(path)) {
-    require('ts-node').register(getTypescriptConfig(path))
-  }
-
   const empty = () => {}
 
   if (!moduleIsAvailable(path)) {
     return empty
+  }
+
+  if (isTypescriptFile(path)) {
+    require('ts-node').register(getTypescriptConfig(path))
   }
 
   const module = require(path)
