@@ -3,7 +3,7 @@ import { expressServer } from './express'
 import { findServerUrl } from './utils/findServerUrl'
 import { logSuccessLaunch } from './utils/logSuccessLaunch'
 import { mergeToPackageJson } from './utils/packageJson'
-import { load } from './utils/paths'
+import { load, resolveApp } from './utils/paths'
 
 export const run = (args: Config) => {
 
@@ -15,26 +15,22 @@ export const run = (args: Config) => {
       localUrlForTerminal,
     } = await findServerUrl(args)
 
-    const shouldServeApp = args.serve
-    const isInProduction = args.prod
     const shouldAddProxy = args.proxify
 
     const routes = await expressServer({
       port,
-      isInProduction,
-      shouldServeApp,
-      buildPath: args.src,
-      routes: load(args.srv),
+      appToServe: args.src && resolveApp(args.src),
+      routes: args.srv && load(resolveApp(args.srv)),
     })
 
-    if (shouldServeApp && !isInProduction && shouldAddProxy) {
+    if (shouldAddProxy) {
+      // TODO Only for CreateReactApp for now
       mergeToPackageJson({ proxy: localUrl })
     }
 
     logSuccessLaunch({
       routes,
-      isInProduction,
-      shouldServeApp,
+      config: args,
       urls: { local: localUrlForTerminal, network: networkUrl },
     })
 

@@ -4,26 +4,24 @@ import * as listEndpoints from 'express-list-endpoints'
 
 type Attributes = {
   port: number,
-  buildPath: string,
-  shouldServeApp: boolean
-  isInProduction: boolean,
-  routes: (app: express.Express) => void,
+  appToServe: string | false
+  routes: ((app: express.Express) => void) | false,
 }
 export const expressServer =  ({
     port,
-    buildPath,
-    shouldServeApp,
-    isInProduction,
+    appToServe,
     routes,
 }: Attributes): Promise<listEndpoints.ExpressEndpoints> => new Promise((resolve, reject) => {
   const app = express()
 
-  if (shouldServeApp && isInProduction) {
+  if (appToServe) {
     app.use(history())
-    app.use(express.static(buildPath))
+    app.use(express.static(appToServe))
   }
 
-  routes(app)
+  if (routes) {
+    routes(app)
+  }
 
   app.listen(port, (err: Error) => {
     if (err) {

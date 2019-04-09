@@ -6,7 +6,7 @@ import { resolveApp } from './paths'
 const filePath = resolveApp('package.json')
 
 const writePackageJson = (packageJson: PackageJSON) => {
-  writeFileSync(filePath, JSON.stringify({ ...packageJson, filePath }, null, 2) + '\n')
+  writeFileSync(filePath, JSON.stringify(packageJson, null, 2) + '\n')
 }
 
 const getPackageJson = (): PackageJSON => require(filePath)

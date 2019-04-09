@@ -31,7 +31,11 @@ const addScripts = async (scripts: { [key: string]: string }) => {
 
   mergeToPackageJson({ scripts })
 
-  done(`${JSON.stringify(scripts)} scripts was added to your package.json.`)
+  done([
+    JSON.stringify(scripts),
+    `script${Object.keys(scripts).length > 1 ? 's were' : 'was'}`,
+    'added to your package.json.',
+  ])
 }
 
 const frontOnly = async () => {
@@ -44,7 +48,7 @@ const frontOnly = async () => {
   const srcFolder = await input('Path of the application folder (built files)?', 'build')
 
   const scripts = {
-    [cmdName]: `serve-my-app --src=${srcFolder} --prod --no-proxify`,
+    [cmdName]: `serve-my-app --src=${srcFolder}`,
   }
 
   mergeToPackageJson({ scripts })
@@ -54,14 +58,14 @@ const frontOnly = async () => {
 }
 
 const apiOnly = async () => {
-  const srvFolder = await input('Path of the server folder (built files)?', 'srv')
+  const srvFolder = await input('Path of the server folder?', 'srv')
 
   const devCmd = await input('Name of the dev command?', 'api:watch')
   const prodCmd = await input('Name of the prod command?', 'api')
 
   const scripts = {
-    [devCmd]: `serve-my-app --srv=${srvFolder} --no-serve --watch`,
-    [prodCmd]: `serve-my-app --srv=${srvFolder} --no-serve --prod`,
+    [devCmd]: `serve-my-app --srv=${srvFolder} --watch`,
+    [prodCmd]: `serve-my-app --srv=${srvFolder}`,
   }
 
   log()
@@ -72,14 +76,14 @@ const apiOnly = async () => {
 
 const apiAndFront = async () => {
   const srcFolder = await input('Path of the application folder (built files)?', 'build')
-  const srvFolder = await input('Path of the server folder (built files)?', 'srv')
+  const srvFolder = await input('Path of the server folder?', 'srv')
 
   const devCmd = await input('Name of the dev command?', 'sma:watch')
   const prodCmd = await input('Name of the prod command?', 'sma')
 
   const scripts = {
-    [devCmd]: `serve-my-app --srv=${srvFolder} --watch`,
-    [prodCmd]: `serve-my-app --srv=${srvFolder} --src=${srcFolder} --prod`,
+    [devCmd]: `serve-my-app --srv=${srvFolder} --proxify --watch`,
+    [prodCmd]: `serve-my-app --srv=${srvFolder} --src=${srcFolder}`,
   }
   log()
   await addScripts(scripts)

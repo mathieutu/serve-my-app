@@ -17,7 +17,7 @@ This package allows you to add a NodeJS Express server easily and quickly to you
 **✨ Features:**
 
 Includes a fully customizable Express Server, which allows you to:
-  
+
  - Serve your Javascript application, with routing handling.
  - Add directly your api routes into your project, without thinking to something else.
 
@@ -57,25 +57,21 @@ It has several configuration parameters.
 
 Most useful ones:
 
-| Option  | Default value | Usage                                                    |
-| ------- | ------------- | -------------------------------------------------------- |
-| --srv   | `'srv'`       | Relative path of your server **node compatible** files   |
-| --src   | `'build'`     | Relative path of your front **browser compatible** files |
-| --watch | `false`       | Restart server if change detected in `--srv` folder      |
-| --serve | `true`        | Serve your frontend application                          |
+| Option    | Type           | Default value | Usage                                                                             |
+|---------  |----------------|---------------|-----------------------------------------------------------------------------------|
+| --srv     | string / false | `false`       | Serve api routes from this folder (relative path)                                 |
+| --src     | string / false | `false`       | Serve your application from this folder (**browser compatible** files)            |
+| --watch   | `false`        | `false`       | Restart server if change detected in `--srv` folder                               |
+| --proxify | boolean        | `false`       | Proxify calls from your app to the express server (depends of you app dev server) |
 
 
 Other ones:
 
-| Option    | Default value                | Usage                                       |
-| --------- | ---------------------------- | ------------------------------------------- |
-| --prod    | `NODE_ENV === 'production'`  | Force production mode                       |
-| --proxify | `true`                       | Proxify calls to express server in dev mode (depends of you app dev server) |
-| --delay   | `false`                      | Delay launch by a small duration (300ms)    |
-| --host    | `HOST` if set or `'0.0.0.0'` | Specify server host                         |
-| --port    | `PORT` if set or `3001`      | Specify server port                         |
-| --https   | `HTTPS` if set or `false`    | Specify if displayed url should use https   |
-
+| Option    | Type    | Default value                | Usage                                                                             |
+|-----------|---------|------------------------------|-----------------------------------------------------------------------------------|
+| --host    | string  | `HOST` if set or `'0.0.0.0'` | Specify server host                                                               |
+| --port    | integer | `PORT` if set or `3001`      | Specify server port                                                               |
+| --https   | boolean | `HTTPS` if set or `false`    | Specify if displayed url should use https                                         |
 
 ## Usage
 
@@ -85,18 +81,93 @@ You really should use the `sma-init` command to configure your server, but see b
 
 ### I only want to serve my frontend code in production
 
-Nothing more to do, you're good to launch the commands:
+- Build your application files (**depends on your application framework/type**):
+  ```bash
+   npm run build
+  ```
 
-```bash
-npm run build
-npm run express:run
-```
+- Serve them.
+  ```bash
+   serve-my-app --src=build
+  ```
+
+Explanation:
+  - `--src`: We're assuming that previous command will output compiled files to `build` folder.
+
 
 ### I only want to add some api routes.
 
-1. You have to create a `srv/index.js` file exporting a function, which will receive the Express application as its only parameter. 
+- Create an api file as [described below](#what-should-the-server-entrypoint-look-like).
+ 
+- Serve it for development purpose:
+  ```bash
+  serve-my-app --srv=srv --watch
+  ```
 
-   For example:
+- Add your routes
+
+- Serve it for production:
+  ```bash
+  serve-my-app --srv=srv
+  ```
+
+Explanation:
+  - `--srv`: We're assuming that your api entrypoint is in `srv` folder.
+  - `--watch`: Server will restart when a route will be added.
+
+
+### I want to serve both my frontend code and add some api routes.
+
+- Create an api file as [described below](#what-should-the-server-entrypoint-look-like). 
+
+Then :
+
+- For development purpose:
+
+  - Launch the server
+
+    ```bash
+      serve-my-app --srv=srv --proxify --watch
+    ```
+
+  - Launch your frontend application (**depends on your framework**):
+
+    ```bash
+    npm run start/serve
+    ```
+
+  Explanation:
+    - `--srv`: We're assuming that your api entrypoint is in `srv` folder.
+    - `--watch`: Server will restart when a route will be added.
+    - `--proxify`: All the relative xhr/fetch calls made in the application will be proxyfied to the server.
+
+- To run the server only once for production:
+
+  - Build your app files (**depends on your framework**):
+
+    ```bash
+    npm run build
+    ```
+
+  - Launch the server
+
+    ```bash
+    serve-my-app --srv=srv --src=build
+    ```
+
+  Explanation:
+    - `--srv`: We're assuming that your api entrypoint is in `srv` folder.
+    - `--src`: We're assuming that previous command will output compiled files to `build` folder.
+
+**👍 In all cases, you can use relative urls for xhr/fetch calls in your code.**
+**🚀 Again, all the ServeMyApp related commands and files can be generated using the `sma-init` cli tool.**
+
+## FAQ
+
+### What should the server entrypoint look like?
+It's a file exporting a function, which will receive the Express application as its only parameter.
+
+For example:
 
    ```javascript
    const { json } = require('express');
@@ -113,77 +184,36 @@ npm run express:run
        });
    }
    ```
+ 
 
-2. Then you just have to set the `-—serve` flag to ` false` to not serve any frontend code, and you're good to go.
-
-   ```bash
-   serve-my-app [...] --serve=false
-   ```
-
-### I want to serve both my frontend code and add some api routes.
-
-You have to create a `srv/index.js` file with your routes described like explained in 1.
-
-Then :
-
-- For development purpose:
-
-  - Launch the server
-
-    ```bash
-    npm run express
-    ```
-
-    The server will automatically be restarted when a change is detected.
-
-  - Launch the app:
-
-    ```bash
-    npm run start
-    ```
-
-    All the relative xhr/fetch calls made in the application will be proxyfied to the express server.
-
-- To run the server only once for production:
-
-  - Build your app files :
-
-    ```bash
-    npm run build
-    ```
-
-  - Launch the server
-
-    ```bash
-    npm run express:run
-    ```
-
-**👍 You can use relative urls for xhr/fetch calls in your code.**
-
-
-## FAQ
-
-### I want to use some transpilation process for my server (Webpack, TypeScript, ...).
+### I want to use some transpilation process for my server (Webpack, TypeScript...).
 
 And you're right, it's a good idea!
 
 In that case, you just have to handle the compilation process on your own, and specify an other folder for `—srv` files. 
 
-For example, for a TypeScript compilation, and an `"outDir": "../dist"` in `srv/tsconfig.json`, you can update your script in `package.json` as: 
+For example, for a TypeScript transpilation, and an `"outDir": "../dist"` in `srv/tsconfig.json`, you can update your script in `package.json` as: 
 
 ```json
-"build:express": "rm -rf dist && tsc -p srv",
-"watch:express": "npm run build:express -- -w",
-"express:run": "NODE_ENV=production serve-my-app --srv=dist"
+"build:server": "rm -rf dist && tsc -p srv",
+"sma": "serve-my-app --srv=dist [...]"
 ```
+
+**🤘 For Typescript transpilation `ts-node` will be used if your api entrypoint is detected as a typescript file.**
+It allows you to use directly your typescript file for development:
+```json
+"sma:dev": "serve-my-app --srv=srv --watch [...]"
+```
+
 
 **🔗 See a full example at: [mathieutu/starter-kit-react-express](https://github.com/mathieutu/starter-kit-react-express)**
 
 ### My `package.json` behaves in a weird manner: a `proxy` key comes and goes in it.
 
-To proxify xhr calls from the front dev server to the express server, create-react-app uses a `proxy` key in the package.json. This is why this package adds it automatically in the file when it is launched in dev mode (when `--prod` is `false`), and removes it when it is stopped. 
+To proxify xhr calls from the front dev server to the express server, create-react-app uses a `proxy` key in the package.json. 
+This is why this package adds it automatically if `--proxify` argument is provided. 
 
-This should be transparent for you, but if you want to disable this automatic adding, and handle yourself (or not) the proxy, you can do it by passing the `-—proxify` flag to `false`. 
+This should be transparent for you, but if you want to disable it and handle yourself (or not) the proxy, you can do it by not passing the `-—proxify` flag. 
 
 You can find the documentation about proxies in create-react-app [here](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#docsNav).
 
@@ -199,4 +229,4 @@ This package is an open-sourced software licensed under the [MIT license](http:/
 
 ## Contributing
 
-Issues and PRs are obviously welcomed and encouraged, as well as new features and documentation.
+Issues and PRs are obviously welcomed and encouraged, for new features as well as documentation.

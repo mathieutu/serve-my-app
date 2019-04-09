@@ -28,9 +28,9 @@
     "build": "rm -rf dist && tsc",
     "watch": "npm run build -- -w",
     "lint": "tslint -p tsconfig.json --fix",
-    "test": "echo \"No test for now\"",
+    "test": "tsc --noEmit",
     "prepare": "npm run build --scripts-prepend-node-path",
-    "prepublishOnly": "npm test && npm run lint",
+    "prepublishOnly": "npm test --scripts-prepend-node-path && npm run lint --scripts-prepend-node-path",
     "changelog": "gitmoji-changelog"
   },
   "devDependencies": {
@@ -63,6 +63,5 @@
   },
   "engines": {
     "node": ">=6.0.0"
-  },
-  "filePath": "/Users/mathieutu/Projects/serve-my-app/package.json"
+  }
 }

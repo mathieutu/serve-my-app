@@ -2,17 +2,29 @@ import chalk from 'chalk'
 import * as nodemon from 'nodemon'
 import * as path from 'path'
 import { Config } from './cli'
-import { removeProxyFromPackageJson } from './utils/packageJson'
+import { error } from './utils/logger'
+import { resolveApp } from './utils/paths'
 
-export const watch = (config: Config, args: Partial<Config>) => {
+const getFlatArgs = (args: Partial<Config>) =>
+  Object.entries(args)
+    .map(([option, value]) => `--${option}=${value}`)
+    .join(' ')
+
+export const watch = (config: Config) => {
+  const pathToWatch = config.srv && resolveApp(config.srv)
+
+  if (!pathToWatch) {
+    return error('--srv is false, and --watch can\'t be applied in this context.')
+  }
+
   return new Promise((resolve) => {
     nodemon({
       exec: `node ${path.resolve(__dirname, 'cli')} ${getFlatArgs({
-        ...args,
+        ...config,
         watch: false,
         delay: true,
       })}`,
-      watch: [config.srv],
+      watch: [pathToWatch],
       ext: 'js mjs json ts',
     })
 
@@ -40,14 +52,6 @@ export const watch = (config: Config, args: Partial<Config>) => {
 
     nodemon.on('quit', () => {
       resolve()
-      removeProxyFromPackageJson()
-      process.exit()
     })
   })
 }
-
-const getFlatArgs = (args: Partial<Config>) =>
-  Object.keys(args).map((option) => {
-    const value = args[option as keyof Config]
-    return `--${option}${value !== true ? `=${value}` : ''}`
-  }).join(' ')
