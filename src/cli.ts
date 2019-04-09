@@ -22,20 +22,19 @@ const DEFAULT_OPTIONS = {
 
 export type Config = typeof DEFAULT_OPTIONS
 
-const argv = minimist(process.argv.slice(2))
+const getCommandParameters = () => minimist(process.argv.slice(2))
 
-const args: Partial<Config> = Object.keys(argv).reduce((result, key) =>
-  hasKey(DEFAULT_OPTIONS, key) ? { ...result, [key]: parse(argv[key]) } : result, {})
+const argv = getCommandParameters()
+
+const isAValidOption = (key: string) => hasKey(DEFAULT_OPTIONS, key)
+const parseArgs = (args: Config, key: string) => ({ ...args, [key]: parse(argv[key]) })
+
+const args: Config = Object.keys(argv)
+  .filter(isAValidOption)
+  .reduce(parseArgs, DEFAULT_OPTIONS)
 
 const prepareConfig = () => {
-  const {
-    srv,
-    src,
-    ...rest
-  } = {
-    ...DEFAULT_OPTIONS,
-    ...args,
-  }
+  const { srv, src, ...rest } = args
 
   return {
     srv: resolveApp(srv),

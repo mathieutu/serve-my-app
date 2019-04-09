@@ -1,4 +1,4 @@
-# serve-my-app
+# ServeMyApp
 
 [![npm](https://img.shields.io/npm/v/serve-my-app.svg)](https://www.npmjs.com/package/serve-my-app)
 [![npm](https://img.shields.io/npm/dt/serve-my-app.svg)](https://www.npmjs.com/package/serve-my-app) 
@@ -32,18 +32,18 @@ Includes a fully customizable Express Server, which allows you to:
 
 ## Getting started
 
-In this ReadMe, we will take an example with a create-react-app application, and a @vue/cli one is coming. But it can be what you want, so please, let us know if you tested it with another framework or app. It will be added to this doc.
+In this ReadMe, we will take an example with a **create-react-app application**, and a **@vue/cli one is coming**. 
+But it can be what you want, so please, let us know if you tested it with another framework or app. It will be added to this doc.
 
+### Installation
 ```bash
 cd my-app
 npm install serve-my-app express
 ```
 
-Add the commands to your package.json
-
-```json
-"express": "serve-my-app --watch",
-"express:run": "NODE_ENV=production serve-my-app"
+### Automatic initialisation
+```bash
+npx sma-init
 ```
 
 ## Configuration
@@ -70,14 +70,18 @@ Other ones:
 | Option    | Default value                | Usage                                       |
 | --------- | ---------------------------- | ------------------------------------------- |
 | --prod    | `NODE_ENV === 'production'`  | Force production mode                       |
-| --proxify | `true`                       | Proxify calls to express server in dev mode |
+| --proxify | `true`                       | Proxify calls to express server in dev mode (depends of you app dev server) |
 | --delay   | `false`                      | Delay launch by a small duration (300ms)    |
 | --host    | `HOST` if set or `'0.0.0.0'` | Specify server host                         |
-| --port    | `PORT` if set or ` 3001`     | Specify server port                         |
-| --https   | ` HTTPS` if set or `false`   | Specify if url should use http              |
+| --port    | `PORT` if set or `3001`      | Specify server port                         |
+| --https   | `HTTPS` if set or `false`    | Specify if displayed url should use https   |
 
 
 ## Usage
+
+### Automatic initialisation
+
+You really should use the `sma-init` command to configure your server, but see below to understand how tu use ServeMyApp
 
 ### I only want to serve my frontend code in production
 
@@ -90,7 +94,7 @@ npm run express:run
 
 ### I only want to add some api routes.
 
-1. You have to create a ` srv/index.js` file exporting a function, which will receive the Express application as its only parameter. 
+1. You have to create a `srv/index.js` file exporting a function, which will receive the Express application as its only parameter. 
 
    For example:
 

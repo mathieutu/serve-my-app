@@ -9,6 +9,22 @@ export const confirm = async (message: string, initial: boolean = true): Promise
   })).answer
 }
 
+export const choose = async <Answer = any>(
+  message: string,
+  choices: { name: string, value: Answer }[],
+): Promise<Answer> => {
+  return (await prompt<{ answer: Answer }>({
+    message,
+    choices,
+    type: 'select',
+    name: 'answer',
+    result() {
+      // @ts-ignore
+      return this.focused.value
+    },
+  })).answer
+}
+
 export const input = async (
   message: string,
   initial?: string,
