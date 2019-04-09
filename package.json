@@ -11,7 +11,8 @@
     "api"
   ],
   "bin": {
-    "serve-my-app": "./dist/cli.js"
+    "serve-my-app": "./dist/cli.js",
+    "sma-init": "./dist/init.js"
   },
   "repository": "https://github.com/mathieutu/serve-my-app.git",
   "author": "Mathieu TUDISCO <dev@mathieutu.ovh>",
@@ -28,7 +29,7 @@
     "watch": "npm run build -- -w",
     "lint": "tslint -p tsconfig.json --fix",
     "test": "echo \"No test for now\"",
-    "prepare": "npm run build",
+    "prepare": "npm run build --scripts-prepend-node-path",
     "prepublishOnly": "npm test && npm run lint",
     "changelog": "gitmoji-changelog"
   },
@@ -47,18 +48,21 @@
     "chalk": "^2.4.2",
     "cli-table": "^0.3.1",
     "connect-history-api-fallback": "^1.6.0",
+    "deepmerge": "^3.1.0",
+    "enquirer": "^2.3.0",
     "express-list-endpoints": "^4.0.0",
     "minimist": "^1.2.0",
     "nodemon": "^1.18.9",
     "portfinder": "^1.0.20"
   },
   "peerDependencies": {
-    "express": "^4.0.0"
+    "express": ">=4.0.0"
   },
   "optionalDependencies": {
-    "ts-node": "^7.0.0"
+    "ts-node": ">=7.0.0"
   },
   "engines": {
     "node": ">=6.0.0"
-  }
+  },
+  "filePath": "/Users/mathieutu/Projects/serve-my-app/package.json"
 }

@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import * as nodemon from 'nodemon'
 import * as path from 'path'
 import { Config } from './cli'
-import { removeFromPackageJson } from './utils/proxy'
+import { removeProxyFromPackageJson } from './utils/packageJson'
 
 export const watch = (config: Config, args: Partial<Config>) => {
   return new Promise((resolve) => {
@@ -40,7 +40,7 @@ export const watch = (config: Config, args: Partial<Config>) => {
 
     nodemon.on('quit', () => {
       resolve()
-      removeFromPackageJson()
+      removeProxyFromPackageJson()
       process.exit()
     })
   })

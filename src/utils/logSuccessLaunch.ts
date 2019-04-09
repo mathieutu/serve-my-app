@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { ExpressEndpoints } from 'express-list-endpoints'
-import { hasYarn } from './env'
+import { cmd } from './env'
 import { clearConsole, done, log } from './logger'
 import routesTable from './routesTable'
 
@@ -12,8 +12,6 @@ type Attributes = {
 }
 
 export const logSuccessLaunch = ({ urls, routes, isInProduction, shouldServeApp }: Attributes) => {
-  const cmd = (exec: string) => `${chalk.cyan((hasYarn() ? 'yarn ' : 'npm run ') + exec)}`
-
   clearConsole()
   done('\n', Date().toString())
 

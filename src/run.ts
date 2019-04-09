@@ -2,8 +2,8 @@ import { Config } from './cli'
 import { expressServer } from './express'
 import { findServerUrl } from './utils/findServerUrl'
 import { logSuccessLaunch } from './utils/logSuccessLaunch'
+import { mergeToPackageJson } from './utils/packageJson'
 import { load } from './utils/paths'
-import { addToPackageJson } from './utils/proxy'
 
 export const run = (args: Config) => {
 
@@ -28,7 +28,7 @@ export const run = (args: Config) => {
     })
 
     if (shouldServeApp && !isInProduction && shouldAddProxy) {
-      addToPackageJson(localUrl)
+      mergeToPackageJson({ proxy: localUrl })
     }
 
     logSuccessLaunch({
