@@ -52,6 +52,7 @@ export const watch = (config: Config) => {
 
     nodemon.on('quit', () => {
       resolve()
+      process.exit()
     })
   })
 }

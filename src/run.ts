@@ -1,8 +1,10 @@
 import { Config } from './cli'
 import { expressServer } from './express'
 import { findServerUrl } from './utils/findServerUrl'
+import { log } from './utils/logger'
 import { logSuccessLaunch } from './utils/logSuccessLaunch'
-import { mergeToPackageJson } from './utils/packageJson'
+import { onDeath } from './utils/misc'
+import { mergeToPackageJson, removeProxyFromPackageJson } from './utils/packageJson'
 import { load, resolveApp } from './utils/paths'
 
 export const run = (args: Config) => {
@@ -33,6 +35,13 @@ export const run = (args: Config) => {
       config: args,
       urls: { local: localUrlForTerminal, network: networkUrl },
     })
+
+    if (shouldAddProxy) {
+      onDeath(() => {
+        removeProxyFromPackageJson()
+        log('Proxy entry removed.')
+      })
+    }
 
     resolve()
   }

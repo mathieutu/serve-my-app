@@ -35,9 +35,16 @@ export const parse = (value: string) => {
   }
 }
 
-export const objectMap = <T extends {[key: string]: any}>
+export const objectMap = <T extends { [key: string]: any }>
 (obj: T, mapFn: (value: any, key: keyof T) => any): { [key: string]: any } => {
   return Object.keys(obj).reduce((result, key) => ({ ...result, [key]: mapFn(obj[key], key) }), {})
 }
 
 export const wrapInArray = <T>(value: T | T[]): T[] => Array.isArray(value) ? value : [value]
+
+export const onDeath = (handler: () => void) => {
+  const events = ['SIGINT', 'SIGTERM', 'SIGQUIT']
+
+  // @ts-ignore
+  events.forEach(event => process.on(event, handler))
+}

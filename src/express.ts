@@ -4,6 +4,7 @@ import * as listEndpoints from 'express-list-endpoints'
 import { createServer } from 'http'
 import { ApiFunction } from './index'
 import { log } from './utils/logger'
+import { onDeath } from './utils/misc'
 
 type Attributes = {
   port: number,
@@ -33,6 +34,10 @@ export const expressServer = ({ port, appToServe, routes }: Attributes): Respons
       } else {
         resolve(getAppEndpoints(app))
       }
+    })
+
+    onDeath(() => {
+      server.close(() => log('Server closed.'))
     })
   })
 
