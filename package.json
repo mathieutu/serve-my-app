@@ -10,6 +10,8 @@
     "app",
     "api"
   ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
     "serve-my-app": "./dist/cli.js",
     "sma-init": "./dist/init.js"

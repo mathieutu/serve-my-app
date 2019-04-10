@@ -165,14 +165,16 @@ Then :
 ## FAQ
 
 ### What should the server entrypoint look like?
-It's a file exporting a function, which will receive the Express application as its only parameter.
+It's a file exporting a function, which will receive the Express application as its first parameter, 
+and the node http server as its second. With both you can do anything you want with your server.
 
 For example:
 
    ```javascript
    const { json } = require('express');
+   const socketIO = require("socket.io");
    
-   module.export = app => {
+   module.export = (app, http) => {
        app.use(json());
    
        app.get('/foo', (req, res) => {
@@ -182,6 +184,10 @@ For example:
        app.post('/bar', (req, res) => {
            res.json(req.body);
        });
+       
+       socketIO(http).on("connection", client => {
+         client.emit("message", "Welcome");
+        });
    }
    ```
  
@@ -203,6 +209,18 @@ For example, for a TypeScript transpilation, and an `"outDir": "../dist"` in `sr
 It allows you to use directly your typescript file for development:
 ```json
 "sma:dev": "serve-my-app --srv=srv --watch [...]"
+```
+
+**😉 To help you in your Typescript development, you can import the ApiFunction type from 'serve-my-app':**
+
+```typescript
+import { ApiFunction } from 'serve-my-app'
+
+const api: ApiFunction = (app, server) => {
+ //
+}
+
+export default api
 ```
 
 

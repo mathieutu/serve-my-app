@@ -27,7 +27,7 @@ const logProxy = () => {
     chalk.bold('you can use relative routes paths in your frontend code!'),
     '\n',
     'You can now start your application dev server',
-    `(often by launching ${cmd('start')} or ${cmd('serve')} depending of your frontend framework.)`,
+    `(often by launching ${cmd('start')} or ${cmd('serve')} depending of your frontend framework).`,
   ])
 }
 

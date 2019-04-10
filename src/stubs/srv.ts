@@ -1,7 +1,7 @@
 export const srvStub = `
 const { json } = require('express');
 
-module.export = (app) => {
+module.export = (app, http) => {
   app.use(json());
 
   app.get('/foo', (req, res) => {
