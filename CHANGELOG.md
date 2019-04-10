@@ -1,5 +1,19 @@
 # Changelog
 
+<a name="0.2.1"></a>
+## 0.2.1 (2019-04-10)
+
+### Added
+
+- ✨ Add init script. (fix [#7](https://github.com/mathieutu/serve-my-app/issues/7)) [[89fc6e0](https://github.com/mathieutu/serve-my-app/commit/89fc6e0982cdb2147f2cddbfd98d40fddc96b381)]
+- ✨ Handle exit signals. (fix [#15](https://github.com/mathieutu/serve-my-app/issues/15)) [[b58095d](https://github.com/mathieutu/serve-my-app/commit/b58095d260fa83bb84ac518fbc20a18d25250296)]
+- ✨ Pass the http server to the ApiFunction, and export type. (fix [#12](https://github.com/mathieutu/serve-my-app/issues/12)) [[84ac2b7](https://github.com/mathieutu/serve-my-app/commit/84ac2b700395415802f252e2ea011b98b655345e)]
+
+### Miscellaneous
+
+- 💥 Simplify Api. (fix [#8](https://github.com/mathieutu/serve-my-app/issues/8)) [[cf4bfd1](https://github.com/mathieutu/serve-my-app/commit/cf4bfd1bc368ec17aa6be3f15dd9a087d88e670b)]
+
+
 <a name="0.1.1"></a>
 ## 0.1.1 (2019-03-19)
 
