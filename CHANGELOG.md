@@ -1,5 +1,17 @@
 # Changelog
 
+<a name="0.2.2"></a>
+## 0.2.2 (2019-08-29)
+
+### Added
+
+- 👷 Add Travis CD. [[5120f58](https://github.com/mathieutu/serve-my-app/commit/5120f58dd1edba4ff68d2a65782419bb0dcf261e)]
+
+### Fixed
+
+- 🐛 Fix typo on generated srv/index.js file. [[b52f454](https://github.com/mathieutu/serve-my-app/commit/b52f4546029ef1e9af5b36707ded03dc018a59ba)]
+
+
 <a name="0.2.1"></a>
 ## 0.2.1 (2019-04-10)
 
