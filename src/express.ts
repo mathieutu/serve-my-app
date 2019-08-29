@@ -19,13 +19,13 @@ export const expressServer = ({ port, appToServe, routes }: Attributes): Respons
     const app = express()
     const server = createServer(app)
 
+    if (routes) {
+      routes(app, server)
+    }
+
     if (appToServe) {
       app.use(history())
       app.use(express.static(appToServe))
-    }
-
-    if (routes) {
-      routes(app, server)
     }
 
     server.listen(port, (err: Error) => {
