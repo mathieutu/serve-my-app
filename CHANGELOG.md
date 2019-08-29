@@ -1,5 +1,13 @@
 # Changelog
 
+<a name="0.3.0"></a>
+## 0.3.0 (2019-08-29)
+
+### Fixed
+
+- 🐛 Hit the added routes before the app service. [[69ef463](https://github.com/mathieutu/serve-my-app/commit/69ef463784fdf8e0587a3014e34119fad66fc2f8)]
+
+
 <a name="0.2.2"></a>
 ## 0.2.2 (2019-08-29)
 
